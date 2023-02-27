@@ -1,0 +1,18 @@
+export const Images = {
+  logo: require('../assets/Images/logo.png'),
+  call: require('../assets/Images/Call.png'),
+  chat: require('../assets/Images/Chat.png'),
+  garage: require('../assets/Images/garage.png'),
+  gym: require('../assets/Images/gym.png'),
+  hardware: require('../assets/Images/hardware.png'),
+  hospital: require('../assets/Images/hospital.png'),
+  hostel: require('../assets/Images/hostel.png'),
+  hotel: require('../assets/Images/hotel.png'),
+  profile: require('../assets/Images/Profile.png'),
+  school: require('../assets/Images/school.png'),
+  search: require('../assets/Images/Search.png'),
+  send: require('../assets/Images/Send.png'),
+  spa: require('../assets/Images/spa.png'),
+  thumbnail: require('../assets/Images/thumbnail.png'),
+  user: require('../assets/Images/user.png'),
+};
