@@ -18,6 +18,7 @@ import {AppLoader} from '../../components/AppLoader/AppLoader';
 import PhoneInput from 'react-native-phone-number-input';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFS from 'react-native-fs';
+import Header from '../../components/Header';
 
 const About = ({navigation}) => {
   const dispatch = useDispatch();
@@ -28,10 +29,7 @@ const About = ({navigation}) => {
   const [imagePic, setImagePic] = useState('');
   const [picBase64, setPicBase64] = useState('');
   const [name, setName] = useState('');
-  const [bankName, setBankName] = useState('');
-  const [branch, setBranch] = useState('');
-  const [ifsc, setIfsc] = useState('');
-  const [account, setAccount] = useState('');
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState({type: '', msg: ''});
   const emailRegex =
@@ -39,6 +37,7 @@ const About = ({navigation}) => {
 
   const handleRegister = async () => {
     setError({type: '', msg: ''});
+
     if (!imagePic) {
       setError({
         type: 'pic',
@@ -48,11 +47,6 @@ const About = ({navigation}) => {
       setError({
         type: 'name',
         msg: 'Name is Required.',
-      });
-    } else if (!phone) {
-      setError({
-        type: 'phone',
-        msg: 'Phone Number is Required.',
       });
     } else if (!email) {
       setError({
@@ -64,25 +58,10 @@ const About = ({navigation}) => {
         type: 'email',
         msg: 'Email is Invalid',
       });
-    } else if (!bankName) {
+    } else if (!phone) {
       setError({
-        type: 'bank',
-        msg: 'Bank Name is Required',
-      });
-    } else if (!branch) {
-      setError({
-        type: 'branch',
-        msg: 'Branch is Required',
-      });
-    } else if (!ifsc) {
-      setError({
-        type: 'ifsc',
-        msg: 'IFSC Code is Required',
-      });
-    } else if (!account) {
-      setError({
-        type: 'account',
-        msg: 'Account Number is Required',
+        type: 'phone',
+        msg: 'Phone Number is Required.',
       });
     } else {
       setLoading(true);
@@ -92,10 +71,6 @@ const About = ({navigation}) => {
         mobile: num,
         email: email,
         profile: picBase64,
-        Bank_Name: bankName,
-        Branch: branch,
-        ifsc_code: ifsc,
-        account_Number: account,
       };
       const otpRes = await http.post('user/otp', {mobile: num});
       console.log('otpRes', otpRes?.data);
@@ -130,7 +105,7 @@ const About = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={theme.black} barStyle={'light-content'} />
+      <Header />
       <AppLoader loading={loading} />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
@@ -152,18 +127,23 @@ const About = ({navigation}) => {
             {error?.msg}
           </Text>
         ) : null}
-        <Text style={styles.desc}>ENTER YOUR FULL NAME</Text>
         <CustomInput
-          flag={false}
-          placeholder={'Jhon Doe'}
-          placeholderTextColor={theme.text.gray}
+          customStyle={{marginTop: responsiveSize(25)}}
+          placeholder={'ENTER NAME'}
           value={name}
           onChangeText={setName}
         />
         {error?.type == 'name' ? (
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
-        <Text style={styles.desc}>ENTER YOUR WHATSAPP PHONE NUMBER</Text>
+        <CustomInput
+          placeholder={'ENTER EMAIL'}
+          value={email}
+          onChangeText={setEmail}
+        />
+        {error?.type == 'email' ? (
+          <Text style={styles.errorMsg}>{error?.msg}</Text>
+        ) : null}
         <PhoneInput
           ref={phoneInputRef}
           textInputStyle={{
@@ -195,8 +175,8 @@ const About = ({navigation}) => {
               borderWidth: 1,
               borderColor: theme.black,
               alignSelf: 'center',
-              width: '94%',
-              height: responsiveSize(40),
+              width: '90%',
+              height: responsiveSize(45),
               marginVertical: '3%',
               borderRadius: 10,
               overflow: 'hidden',
@@ -225,66 +205,27 @@ const About = ({navigation}) => {
         {error?.type == 'phone' ? (
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
-        <Text style={styles.desc}>ENTER YOUR EMAIL.</Text>
+
         <CustomInput
-          placeholder={'xyz@gmail.com'}
+          placeholder={'PASSWORD'}
           placeholderTextColor={theme.text.gray}
-          value={email}
-          onChangeText={setEmail}
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
         />
-        {error?.type == 'email' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-        <Text style={styles.desc}>ENTER YOUR BANK NAME.</Text>
-        <CustomInput
-          placeholder={'Bank_Name'}
-          placeholderTextColor={theme.text.gray}
-          value={bankName}
-          onChangeText={setBankName}
-        />
-        {error?.type == 'bank' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-        <Text style={styles.desc}>ENTER BRANCH</Text>
-        <CustomInput
-          placeholder={'Branch'}
-          placeholderTextColor={theme.text.gray}
-          value={branch}
-          onChangeText={setBranch}
-        />
-        {error?.type == 'branch' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-        <Text style={styles.desc}>ENTER IFSC CODE</Text>
-        <CustomInput
-          placeholder={'IFSC Code'}
-          placeholderTextColor={theme.text.gray}
-          value={ifsc}
-          onChangeText={setIfsc}
-        />
-        {error?.type == 'ifsc' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-        <Text style={styles.desc}>ENTER ACCOUNT NUMBER</Text>
-        <CustomInput
-          placeholder={'account_number'}
-          placeholderTextColor={theme.text.gray}
-          value={account}
-          onChangeText={setAccount}
-        />
-        {error?.type == 'account' ? (
+        {error?.type == 'password' ? (
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
 
         <CustomButton
           onPress={handleRegister}
-          title={'VERIFY'}
+          title={'REGISTER'}
           customStyle={{marginTop: '5%'}}
         />
         <Text
           onPress={() => navigation.navigate('Login')}
           style={styles.account}>
-          EXISTING USER ? LOGIN NOW
+          EXISTING USER ? LOGIN
         </Text>
       </ScrollView>
     </SafeAreaView>
@@ -296,11 +237,11 @@ export default About;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.black,
+    backgroundColor: theme.white,
   },
   uploadview: {
-    borderWidth: 2,
-    borderColor: theme.secondary,
+    borderWidth: 0.8,
+    borderColor: theme.text.gray,
     width: responsiveSize(100),
     height: responsiveSize(100),
     borderRadius: 100,
@@ -316,20 +257,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   upload: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
     fontSize: responsiveSize(12),
     textAlign: 'center',
   },
   heading: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
-    fontSize: responsiveSize(20),
+    fontSize: responsiveSize(15),
     marginTop: responsiveSize(25),
     marginHorizontal: responsiveSize(15),
+    marginBottom: responsiveSize(8),
   },
   account: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
     textAlign: 'center',
     margin: responsiveSize(15),

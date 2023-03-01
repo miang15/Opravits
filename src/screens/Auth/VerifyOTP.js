@@ -15,6 +15,7 @@ import {useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {userLoggedAction, verifyOTPAction} from '../../redux/Auth/authactions';
 import {AppLoader} from '../../components/AppLoader/AppLoader';
+import Header from '../../components/Header';
 
 const VerifyOTP = ({navigation}) => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const VerifyOTP = ({navigation}) => {
         dispatch(userLoggedAction(true));
         setLocalStorage('token', registerRes?.data?.token);
         setLocalStorage('loggedIn', registerRes?.data?.token);
-        navigation.replace('BottomTab');
+        // navigation.replace('BottomTab');
       }
       setLoading(false);
     }
@@ -52,17 +53,14 @@ const VerifyOTP = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={theme.black} barStyle={'light-content'} />
+      <Header />
       <AppLoader loading={loading} />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <Text style={styles.heading}>AUTHENTICATION</Text>
-        <Text style={styles.desc}>ENTER THE OTP SENT TO YOUR WHATSAPP</Text>
         <CustomInput
-          flag={false}
-          placeholder={'* * * * * *'}
-          placeholderTextColor={theme.text.gray}
+          placeholder={'ENTER OTP'}
           value={otp}
           onChangeText={setOtp}
         />
@@ -71,8 +69,9 @@ const VerifyOTP = ({navigation}) => {
         ) : null}
 
         <CustomButton
-          onPress={handleVerify}
-          title={'FINISH'}
+          onPress={() => navigation.replace('Home')}
+          // onPress={handleVerify}
+          title={'AUTHENTICATE'}
           customStyle={{marginTop: '5%'}}
         />
       </ScrollView>
@@ -85,14 +84,15 @@ export default VerifyOTP;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.black,
+    backgroundColor: theme.white,
   },
   heading: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
-    fontSize: responsiveSize(20),
+    fontSize: responsiveSize(15),
     marginTop: responsiveSize(25),
     marginHorizontal: responsiveSize(15),
+    marginBottom: responsiveSize(8),
   },
   desc: {
     color: theme.white,

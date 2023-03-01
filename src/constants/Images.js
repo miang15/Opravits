@@ -15,4 +15,5 @@ export const Images = {
   spa: require('../assets/Images/spa.png'),
   thumbnail: require('../assets/Images/thumbnail.png'),
   user: require('../assets/Images/user.png'),
+  discovery: require('../assets/Images/Discovery.png'),
 };

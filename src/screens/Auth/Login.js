@@ -12,10 +12,14 @@ import CustomButton from '../../components/CustomButton';
 import {AppLoader} from '../../components/AppLoader/AppLoader';
 import http from '../../api/http';
 import {setLocalStorage} from '../../utils/actions';
+import Header from '../../components/Header';
+import CustomInput from '../../components/CustomInput';
 
 const Login = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const phoneInputRef = useRef();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState('');
   const [otp, setOtp] = useState('');
@@ -48,71 +52,28 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={theme.black} barStyle={'light-content'} />
       <AppLoader loading={loading} />
+      <Header />
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <Text style={styles.heading}>LOGIN TO CONTINUE</Text>
-        <Text style={styles.desc}>ENTER YOUR PHONE NUMBER</Text>
-        <PhoneInput
-          ref={phoneInputRef}
-          textInputStyle={{
-            color: theme.black,
-            paddingVertical: 0,
-          }}
-          codeTextStyle={{
-            color: theme.black,
-            marginRight: 5,
-          }}
-          textContainerStyle={{
-            paddingVertical: 0,
-            height: 40,
-            borderBottomWidth: 0,
-            paddingHorizontal: 5,
-            borderColor: theme.black,
-            backgroundColor: theme.white,
-            overflow: 'hidden',
-          }}
-          flagButtonStyle={{
-            borderRightWidth: 1,
-            alignSelf: 'flex-start',
-            width: '18%',
-            borderColor: theme.black,
-          }}
-          containerStyle={[
-            {
-              paddingVertical: 0,
-              borderWidth: 1,
-              borderColor: theme.black,
-              alignSelf: 'center',
-              width: '94%',
-              height: responsiveSize(40),
-              marginVertical: '3%',
-              borderRadius: 10,
-              overflow: 'hidden',
-            },
-          ]}
-          defaultValue={value}
-          defaultCode={'IN'}
-          layout="first"
-          onChangeFormattedText={val => {
-            const checkValid = phoneInputRef.current?.isValidNumber(val);
-            if (checkValid) {
-              setPhone(val);
-              setError({
-                type: '',
-                msg: '',
-              });
-            } else {
-              setError({
-                type: 'phone',
-                msg: 'Phone Number is Invalid',
-              });
-            }
-          }}
+        <CustomInput
+          placeholder={'ENTER PHONE/EMAIL'}
+          value={email}
+          onChangeText={setEmail}
         />
-        {error?.type == 'phone' ? (
+        {error?.type == 'email' ? (
+          <Text style={styles.errorMsg}>{error?.msg}</Text>
+        ) : null}
+        <CustomInput
+          customStyle={{marginTop: responsiveSize(15)}}
+          placeholder={'PASSWORD'}
+          value={email}
+          onChangeText={setEmail}
+          secureTextEntry={true}
+        />
+        {error?.type == 'password' ? (
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
 
@@ -124,16 +85,8 @@ const Login = ({navigation}) => {
         <Text
           onPress={() => navigation.navigate('About')}
           style={styles.account}>
-          NEW USER ? REGISTER NOW!
+          NEW USER ? REGISTER
         </Text>
-        {/* <View style={styles.bottomView}>
-          <Text style={styles.text}>ALSO VALIDATE USING</Text>
-          <SocialButton icon={Images.google} title={'CONTINUE WITH GOOGLE'} />
-          <SocialButton
-            icon={Images.facebook}
-            title={'CONTINUE WITH FACEBOOK'}
-          />
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -144,14 +97,15 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.black,
+    backgroundColor: theme.white,
   },
   heading: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
-    fontSize: responsiveSize(20),
+    fontSize: responsiveSize(15),
     marginTop: responsiveSize(25),
     marginHorizontal: responsiveSize(15),
+    marginBottom: responsiveSize(8),
   },
   desc: {
     color: theme.white,
@@ -180,7 +134,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.interbold,
   },
   account: {
-    color: theme.white,
+    color: theme.black,
     fontFamily: theme.interbold,
     textAlign: 'center',
     margin: responsiveSize(15),

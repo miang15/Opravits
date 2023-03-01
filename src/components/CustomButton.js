@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: responsiveSize(5),
     alignItems: 'center',
-    padding: 15,
-    borderRadius: 10,
+    padding: 16,
+    borderRadius: 15,
   },
   label: {
     color: theme.white,
-    fontSize: responsiveSize(14),
+    fontSize: responsiveSize(12),
     fontFamily: theme.interbold,
   },
 });

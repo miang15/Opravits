@@ -14,41 +14,40 @@ const CustomInput = ({
   customStyle,
   customInput,
   editable,
+  secureTextEntry,
 }) => {
   const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
       alignSelf: 'center',
-      width: '92%',
+      width: '90%',
       borderWidth: 1,
-      borderColor: theme.white,
-      borderRadius: 10,
+      borderColor: theme.black,
+      borderRadius: 15,
       paddingHorizontal: 15,
-      marginVertical: responsiveSize(5),
+      marginVertical: responsiveSize(8),
     },
     input: {
-      width: flag ? '90%' : '95%',
-      marginLeft: flag ? responsiveSize(5) : null,
+      width: '95%',
       paddingVertical: 0,
-      height: responsiveSize(40),
-      color: theme.white,
-      fontSize: responsiveSize(14),
-      fontFamily: theme.interbold,
+      height: responsiveSize(45),
+      color: theme.black,
+      fontSize: responsiveSize(12),
     },
   });
   return (
     <View style={[styles.container, customStyle]}>
-      {flag ? <Image source={Images.flag} /> : null}
       <TextInput
         style={[styles.input, customInput]}
         placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
+        placeholderTextColor={theme.black}
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         maxLength={max}
         editable={editable}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );
