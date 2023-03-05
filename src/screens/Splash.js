@@ -1,10 +1,4 @@
-import {
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-} from 'react-native';
+import {Image, SafeAreaView, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 import {Images} from '../constants/Images';
 import {responsiveSize, theme} from '../utils/theme';
@@ -18,15 +12,14 @@ const Splash = ({navigation}) => {
   }, []);
 
   const handleSession = async () => {
-    navigation.replace('Login');
-    // const token = await getLocalStorage('loggedIn');
-    // setTimeout(() => {
-    //   if (token) {
-    //     // navigation.replace('BottomTab');
-    //   } else {
-    //     navigation.replace('Login');
-    //   }
-    // }, 2000);
+    const token = await getLocalStorage('loggedIn');
+    setTimeout(() => {
+      if (token) {
+        navigation.replace('Home');
+      } else {
+        navigation.replace('Login');
+      }
+    }, 2000);
   };
 
   return (

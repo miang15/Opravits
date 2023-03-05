@@ -10,6 +10,8 @@ import Home from '../screens/Home/Home';
 import DetailScreen from '../screens/Home/DetailScreen';
 import Chat from '../screens/Home/Chat';
 import Profile from '../screens/Home/Profile';
+import Messages from '../screens/Home/Messages';
+import Category from '../screens/Home/Category';
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -23,8 +25,10 @@ const Index = () => {
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Category" component={Category} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="VerifyOTP" component={VerifyOTP} />
+        <Stack.Screen name="Messages" component={Messages} />
         <Stack.Screen name="DetailScreen" component={DetailScreen} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Profile" component={Profile} />

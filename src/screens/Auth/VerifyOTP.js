@@ -13,7 +13,11 @@ import http from '../../api/http';
 import {setLocalStorage} from '../../utils/actions';
 import {useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {userLoggedAction, verifyOTPAction} from '../../redux/Auth/authactions';
+import {
+  setUserAction,
+  userLoggedAction,
+  verifyOTPAction,
+} from '../../redux/Auth/authactions';
 import {AppLoader} from '../../components/AppLoader/AppLoader';
 import Header from '../../components/Header';
 
@@ -43,9 +47,14 @@ const VerifyOTP = ({navigation}) => {
       console.log('registerRes', registerRes?.data);
       if (registerRes?.data?.token) {
         dispatch(userLoggedAction(true));
+        dispatch(setUserAction(registerRes?.data?.user));
         setLocalStorage('token', registerRes?.data?.token);
+        setLocalStorage('userData', JSON.stringify(registerRes?.data?.user));
         setLocalStorage('loggedIn', registerRes?.data?.token);
-        // navigation.replace('BottomTab');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
       }
       setLoading(false);
     }
@@ -69,8 +78,7 @@ const VerifyOTP = ({navigation}) => {
         ) : null}
 
         <CustomButton
-          onPress={() => navigation.replace('Home')}
-          // onPress={handleVerify}
+          onPress={handleVerify}
           title={'AUTHENTICATE'}
           customStyle={{marginTop: '5%'}}
         />

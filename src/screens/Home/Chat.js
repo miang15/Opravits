@@ -5,13 +5,28 @@ import {
   TouchableOpacity,
   Text,
   View,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import Header from '../../components/Header';
 import {theme} from '../../utils/theme';
 import {Images} from '../../constants/Images';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  accessChatAction,
+  setChatMessages,
+} from '../../redux/HomeRedux/homeactions';
 
 const Chat = ({navigation}) => {
+  const allChats = useSelector(state => state.HomeReducer.allChats);
+  const dispatch = useDispatch();
+  console.log('allChats', allChats);
+
+  const handleChatClick = async item => {
+    dispatch(setChatMessages([]));
+    dispatch(accessChatAction(item));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -19,18 +34,29 @@ const Chat = ({navigation}) => {
         onProfilePress={() => navigation.navigate('Profile')}
       />
       <Text style={styles.heading}>CHATS</Text>
-      <TouchableOpacity style={styles.row}>
-        <View style={styles.imgview}>
-          <Image
-            style={styles.img}
-            source={Images.thumbnail}
-            resizeMode="cover"
-          />
-        </View>
-        <Text style={styles.name} numberOfLines={1}>
-          BUSINESS NAME
-        </Text>
-      </TouchableOpacity>
+      <FlatList
+        data={allChats}
+        renderItem={({item, index}) => {
+          return (
+            <TouchableOpacity
+              onPress={() => handleChatClick(item)}
+              style={styles.row}>
+              <View style={styles.imgview}>
+                <Image
+                  style={styles.img}
+                  source={{uri: item?.url}}
+                  resizeMode="cover"
+                />
+              </View>
+              <Text style={styles.name} numberOfLines={1}>
+                {item?.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => index}
+      />
     </SafeAreaView>
   );
 };

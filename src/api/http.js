@@ -4,7 +4,7 @@ import {setLoadingAction, setToastAction} from '../redux/AppRedux/appactions';
 import {store} from '../redux/store';
 import {showMessage} from 'react-native-flash-message';
 
-export const BASE_URL = `http://ec2-3-109-4-176.ap-south-1.compute.amazonaws.com:5000/api/`;
+export const BASE_URL = `http://ec2-13-233-125-111.ap-south-1.compute.amazonaws.com:5001/api/`;
 
 const http = axios.create({
   baseURL: BASE_URL,
@@ -33,9 +33,13 @@ const ResponseInterceptor = response => {
 http.interceptors.response.use(ResponseInterceptor, err => {
   const error = err?.response?.data || err;
   store.dispatch(setLoadingAction(false));
-  console.log('err', error);
-  if (error?.message?.message) {
-    console.log('err', error?.message);
+
+  if (err?.response?.config?.url == 'user/addclick') {
+    console.log('ignore');
+  } else if (err?.response?.config?.url == 'message/allmsgs') {
+    console.log('ignore all msg', err?.response?.data);
+  } else if (error?.message?.message) {
+    console.log('err message', error?.message);
   } else if (error?.message) {
     showMessage({
       message: 'Error',

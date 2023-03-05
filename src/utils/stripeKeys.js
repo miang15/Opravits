@@ -1,0 +1,7 @@
+// pk_test_51MgOkDFWfgPTBcgnMniyJ9wpe4gDvbpDfOc1hV6uqx44VzFeIRLb5vRqeBJrnepwsQ0HfppxgHs81Y6vLVqVz1r300Z6JcGO4U
+
+// sk_test_51MgOkDFWfgPTBcgn76nC1D4w9wYWuCP3yemsIsdUFYUMSnqzPM7Ds9jkbae4otyoYVQUje1WwovHkITKQE8wxAgj00ya9brMP4
+
+// http://ec2-3-109-4-176.ap-south-1.compute.amazonaws.com:5000/create-payment-intent
+
+// pk_live_51MgOkDFWfgPTBcgnbbm1m8xedJaqi8w5Hasl4eSYCjjQhnWtxiEzACLMHC3F7VX4lwuYISpGkn7coFqvyBdMrYHh00D78kvDJE

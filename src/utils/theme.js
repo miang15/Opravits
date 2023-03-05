@@ -15,7 +15,7 @@ export const theme = {
   primary: '#8102FF',
   mediumgray: '#353535',
   darkgray: '#252525',
-  secondary: '#452781',
+  secondary: '#F9F3FF',
   dullpurple: '#1D1A23',
 
   text: {

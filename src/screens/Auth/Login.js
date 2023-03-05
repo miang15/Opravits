@@ -18,11 +18,8 @@ import CustomInput from '../../components/CustomInput';
 const Login = ({navigation}) => {
   const [phone, setPhone] = useState('');
   const phoneInputRef = useRef();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState('');
-  const [otp, setOtp] = useState('');
   const [error, setError] = useState({type: '', msg: ''});
 
   const handleGetOTP = async () => {
@@ -58,22 +55,65 @@ const Login = ({navigation}) => {
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <Text style={styles.heading}>LOGIN TO CONTINUE</Text>
-        <CustomInput
-          placeholder={'ENTER PHONE/EMAIL'}
-          value={email}
-          onChangeText={setEmail}
+        <PhoneInput
+          ref={phoneInputRef}
+          textInputStyle={{
+            color: theme.black,
+            paddingVertical: 0,
+          }}
+          codeTextStyle={{
+            color: theme.black,
+            marginRight: 5,
+          }}
+          textContainerStyle={{
+            paddingVertical: 0,
+            height: 40,
+            borderBottomWidth: 0,
+            paddingHorizontal: 5,
+            borderColor: theme.black,
+            backgroundColor: theme.white,
+            overflow: 'hidden',
+          }}
+          flagButtonStyle={{
+            borderRightWidth: 1,
+            alignSelf: 'flex-start',
+            width: '18%',
+            borderColor: theme.black,
+          }}
+          containerStyle={[
+            {
+              paddingVertical: 0,
+              borderWidth: 1,
+              borderColor: theme.black,
+              alignSelf: 'center',
+              width: '90%',
+              height: responsiveSize(45),
+              marginVertical: '3%',
+              borderRadius: 10,
+              overflow: 'hidden',
+            },
+          ]}
+          defaultValue={value}
+          defaultCode={'IN'}
+          layout="first"
+          onChangeFormattedText={val => {
+            const checkValid = phoneInputRef.current?.isValidNumber(val);
+
+            if (checkValid) {
+              setPhone(val);
+              setError({
+                type: '',
+                msg: '',
+              });
+            } else {
+              setError({
+                type: 'phone',
+                msg: 'Phone Number is Invalid',
+              });
+            }
+          }}
         />
-        {error?.type == 'email' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-        <CustomInput
-          customStyle={{marginTop: responsiveSize(15)}}
-          placeholder={'PASSWORD'}
-          value={email}
-          onChangeText={setEmail}
-          secureTextEntry={true}
-        />
-        {error?.type == 'password' ? (
+        {error?.type == 'phone' ? (
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
 

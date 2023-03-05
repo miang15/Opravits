@@ -206,17 +206,6 @@ const About = ({navigation}) => {
           <Text style={styles.errorMsg}>{error?.msg}</Text>
         ) : null}
 
-        <CustomInput
-          placeholder={'PASSWORD'}
-          placeholderTextColor={theme.text.gray}
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
-        />
-        {error?.type == 'password' ? (
-          <Text style={styles.errorMsg}>{error?.msg}</Text>
-        ) : null}
-
         <CustomButton
           onPress={handleRegister}
           title={'REGISTER'}

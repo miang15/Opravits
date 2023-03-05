@@ -3,13 +3,18 @@ import React from 'react';
 import {theme} from '../utils/theme';
 import {Images} from '../constants/Images';
 
-const DetailCard = ({phone, title, detail, time, onChat, onDetails}) => {
+const DetailCard = ({phone, detail, time, onChat, onDetails}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.name} numberOfLines={1}>
-        {title}
+        {'BUSINESS DETAILS'}
       </Text>
       <Text style={styles.name}>{detail}</Text>
+      <Text
+        style={{...styles.name, marginTop: theme.hp('2.5%')}}
+        numberOfLines={1}>
+        {'BUSINESS PHONE'}
+      </Text>
       <Text style={styles.name} numberOfLines={1}>
         {phone}
       </Text>
